@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – Gacor Legends</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div class="auth-wrapper">
+  <div class="auth-logo">
+    <span id="authLogoSlot"></span>
+    <h1>GACOR<br>LEGENDS</h1>
+  </div>
+
+  <div class="auth-card">
+    <h2>Masuk</h2>
+    <p class="subtitle">Selamat datang kembali, Legenda!</p>
+
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="success-msg" id="successMsg"></div>
+
+    <div class="form-group">
+      <label>Username / Email</label>
+      <input type="text" id="loginId" placeholder="Username atau email kamu" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <div class="password-wrapper">
+        <input type="password" id="loginPassword" placeholder="Password kamu">
+        <span class="toggle-pass" onclick="togglePass('loginPassword', this)">👁️</span>
+      </div>
+    </div>
+
+    <button class="btn-auth" onclick="doLogin()">MASUK</button>
+
+    <div class="auth-switch">
+      Belum punya akun? <a href="register.html">Daftar di sini</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Particles
+  const pc = document.getElementById('particles');
+  for(let i=0;i<30;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `left:${Math.random()*100}%;--dur:${4+Math.random()*8}s;--delay:${Math.random()*6}s;`;
+    pc.appendChild(p);
+  }
+</script>
+
+<!-- app.js di-load setelah inline script agar GL_LOGO_SVG_BIG tersedia -->
+<script src="app.js"></script>
+<script>
+  // Render logo SVG embedded
+  renderAuthLogo();
+
+  // Pre-fill username dari register terakhir
+  const lastReg = JSON.parse(localStorage.getItem('gl_register_last') || 'null');
+  if(lastReg){ document.getElementById('loginId').value = lastReg.username; }
+
+  function togglePass(id, el){
+    const inp = document.getElementById(id);
+    if(inp.type==='password'){inp.type='text';el.textContent='🙈';}
+    else{inp.type='password';el.textContent='👁️';}
+  }
+
+  function showError(msg){
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg; el.classList.add('show');
+    document.getElementById('successMsg').classList.remove('show');
+  }
+  function showSuccess(msg){
+    const el = document.getElementById('successMsg');
+    el.textContent = msg; el.classList.add('show');
+    document.getElementById('errorMsg').classList.remove('show');
+  }
+
+  function doLogin(){
+    const loginId = document.getElementById('loginId').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    if(!loginId||!password) return showError('Semua field harus diisi!');
+
+    const users = JSON.parse(localStorage.getItem('gl_users') || '[]');
+    const user = users.find(u => (u.username===loginId || u.email===loginId) && u.password===password);
+    if(!user) return showError('Username/email atau password salah!');
+
+    localStorage.setItem('gl_session', JSON.stringify({username: user.username, email: user.email}));
+    showSuccess('Login berhasil! Memuat...');
+    setTimeout(() => window.location.href = 'home.html', 1200);
+  }
+</script>
+</body>
+</html>
