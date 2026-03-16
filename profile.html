@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile – Gacor Legends</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="home.html" class="navbar-brand">
+    <span id="navLogoSlot"></span>
+    <span class="brand-name">GACOR<br>LEGENDS</span>
+  </a>
+  <div class="navbar-links">
+    <a href="home.html" class="nav-link" data-page="home">Home</a>
+    <a href="penjelasan.html" class="nav-link" data-page="penjelasan">Penjelasan</a>
+    <a href="p2w.html" class="nav-link" data-page="p2w">P2W</a>
+    <a href="team.html" class="nav-link" data-page="team">Team</a>
+  </div>
+  <div class="navbar-right">
+    <a href="profile.html" class="nav-user" style="border-color:var(--accent);">
+      <div class="nav-avatar" id="navAvatarSlot"></div>
+      <span class="nav-username" id="navUsernameSlot"></span>
+    </a>
+    <button class="btn-logout" onclick="doLogout()">Keluar</button>
+  </div>
+</nav>
+
+<main>
+  <div class="profile-page">
+    <!-- Header -->
+    <div class="profile-header">
+      <div class="profile-avatar-big" id="avatarBig" onclick="document.getElementById('avatarInput').click()">
+        <span id="avatarEmoji">😊</span>
+        <div class="avatar-overlay">📷</div>
+      </div>
+      <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="changeAvatar(this)">
+      <div class="profile-info">
+        <h2 id="profileUsername">Loading...</h2>
+        <p id="profileEmail">Loading...</p>
+        <p id="profileJoined" style="margin-top:4px;font-size:12px;color:var(--gray-600);">Bergabung: –</p>
+      </div>
+    </div>
+
+    <div id="saveNotif" style="display:none;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--accent);margin-bottom:16px;text-align:center;">
+      ✓ Perubahan berhasil disimpan!
+    </div>
+
+    <!-- Foto Profil Section -->
+    <div class="profile-section">
+      <h3>📸 Foto Profil</h3>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div id="avatarPreview" style="width:60px;height:60px;border-radius:50%;background:var(--gray-800);border:2px solid var(--gray-700);display:flex;align-items:center;justify-content:center;font-size:26px;overflow:hidden;"></div>
+        <div>
+          <p style="font-size:13px;color:var(--gray-400);margin-bottom:10px;">Klik foto profil di atas atau tombol di bawah untuk mengganti foto.</p>
+          <label style="display:inline-block;background:var(--gray-700);color:var(--gray-200);border-radius:7px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;margin-right:8px;">
+            Ganti Foto
+            <input type="file" accept="image/*" style="display:none" onchange="changeAvatar(this)">
+          </label>
+          <button onclick="removeAvatar()" style="background:transparent;border:1px solid var(--gray-700);color:var(--gray-400);border-radius:7px;padding:8px 14px;font-size:13px;cursor:pointer;">Hapus</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informasi Akun -->
+    <div class="profile-section">
+      <h3>👤 Informasi Akun</h3>
+
+      <!-- Username -->
+      <div class="profile-field" id="fieldUsername">
+        <div class="field-label">Username</div>
+        <div class="field-value">
+          <span class="text-display" id="dispUsername"></span>
+          <input type="text" id="inpUsername" placeholder="Username baru">
+        </div>
+        <div class="field-action">
+          <button class="btn-edit" onclick="editField('Username')">Edit</button>
+          <button class="btn-save" onclick="saveField('Username')">Simpan</button>
+          <button class="btn-cancel" onclick="cancelField('Username')">Batal</button>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="profile-field" id="fieldEmail">
+        <div class="field-label">Email</div>
+        <div class="field-value">
+          <span class="text-display" id="dispEmail"></span>
+          <input type="email" id="inpEmail" placeholder="Email baru">
+        </div>
+        <div class="field-action">
+          <button class="btn-edit" onclick="editField('Email')">Edit</button>
+          <button class="btn-save" onclick="saveField('Email')">Simpan</button>
+          <button class="btn-cancel" onclick="cancelField('Email')">Batal</button>
+        </div>
+      </div>
+
+      <!-- Bio -->
+      <div class="profile-field" id="fieldBio">
+        <div class="field-label">Bio</div>
+        <div class="field-value">
+          <span class="text-display" id="dispBio" style="color:var(--gray-400);font-style:italic;"></span>
+          <input type="text" id="inpBio" placeholder="Ceritakan sedikit tentang dirimu...">
+        </div>
+        <div class="field-action">
+          <button class="btn-edit" onclick="editField('Bio')">Edit</button>
+          <button class="btn-save" onclick="saveField('Bio')">Simpan</button>
+          <button class="btn-cancel" onclick="cancelField('Bio')">Batal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="profile-section">
+      <h3>🔒 Keamanan</h3>
+
+      <div class="profile-field" id="fieldPassword">
+        <div class="field-label">Password</div>
+        <div class="field-value">
+          <span class="text-display" id="dispPassword">••••••••</span>
+          <input type="password" id="inpPassword" placeholder="Password baru (min. 6 karakter)">
+        </div>
+        <div class="field-action">
+          <button class="btn-edit" onclick="editField('Password')">Ganti</button>
+          <button class="btn-save" onclick="saveField('Password')">Simpan</button>
+          <button class="btn-cancel" onclick="cancelField('Password')">Batal</button>
+        </div>
+      </div>
+
+      <div class="profile-field" id="fieldPasswordConfirm" style="display:none;">
+        <div class="field-label">Konfirmasi</div>
+        <div class="field-value">
+          <input type="password" id="inpPasswordConfirm" placeholder="Ulangi password baru" class="editing" style="display:block;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="profile-section" style="border-color:rgba(255,68,68,0.2);">
+      <h3 style="color:#ff4444;">⚠️ Zona Berbahaya</h3>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <p style="color:var(--gray-200);font-size:14px;font-weight:600;">Hapus Akun</p>
+          <p style="color:var(--gray-400);font-size:13px;">Tindakan ini tidak dapat dibatalkan. Semua data akan hilang.</p>
+        </div>
+        <button onclick="deleteAccount()" style="background:transparent;border:1px solid #ff4444;color:#ff4444;border-radius:8px;padding:10px 20px;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;cursor:pointer;letter-spacing:1px;transition:all 0.2s;"
+          onmouseover="this.style.background='rgba(255,68,68,0.1)'" onmouseout="this.style.background='transparent'">
+          HAPUS AKUN
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-brand">GACOR LEGENDS</div>
+  <p>© 2024 Gacor Legends. Server Minecraft Indonesia Terbaik.</p>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  renderNav('profile');
+  const session = JSON.parse(localStorage.getItem('gl_session') || 'null');
+  if (!session) { window.location.href = 'login.html'; }
+
+  function getUsers() { return JSON.parse(localStorage.getItem('gl_users') || '[]'); }
+  function saveUsers(u) { localStorage.setItem('gl_users', JSON.stringify(u)); }
+  function getCurrentUser() {
+    return getUsers().find(u => u.username === session.username);
+  }
+
+  function loadProfile() {
+    const user = getCurrentUser();
+    if (!user) return;
+    document.getElementById('profileUsername').textContent = user.username;
+    document.getElementById('profileEmail').textContent = user.email;
+    document.getElementById('profileJoined').textContent = 'Bergabung: ' + (user.joined || '–');
+    document.getElementById('dispUsername').textContent = user.username;
+    document.getElementById('dispEmail').textContent = user.email;
+    document.getElementById('dispBio').textContent = user.bio || 'Belum ada bio.';
+    document.getElementById('inpUsername').value = user.username;
+    document.getElementById('inpEmail').value = user.email;
+    document.getElementById('inpBio').value = user.bio || '';
+
+    // Avatar
+    const avatarBig = document.getElementById('avatarBig');
+    const avatarPrev = document.getElementById('avatarPreview');
+    if (user.avatar) {
+      avatarBig.innerHTML = `<img src="${user.avatar}" style="width:100%;height:100%;object-fit:cover;"><div class="avatar-overlay" onclick="document.getElementById('avatarInput').click()">📷</div>`;
+      avatarPrev.innerHTML = `<img src="${user.avatar}" style="width:100%;height:100%;object-fit:cover;">`;
+    } else {
+      const emoji = user.username[0]?.toUpperCase() || '?';
+      document.getElementById('avatarEmoji').textContent = emoji;
+      avatarPrev.textContent = emoji;
+    }
+  }
+
+  function showNotif(msg = 'Perubahan berhasil disimpan!') {
+    const n = document.getElementById('saveNotif');
+    n.textContent = '✓ ' + msg;
+    n.style.display = 'block';
+    setTimeout(() => n.style.display = 'none', 2500);
+  }
+
+  function editField(name) {
+    const field = document.getElementById('field' + name);
+    field.classList.add('editing-mode');
+    const inp = document.getElementById('inp' + name);
+    inp.classList.add('editing');
+    if (name === 'Password') {
+      document.getElementById('fieldPasswordConfirm').style.display = 'flex';
+    }
+  }
+  function cancelField(name) {
+    const field = document.getElementById('field' + name);
+    field.classList.remove('editing-mode');
+    const inp = document.getElementById('inp' + name);
+    inp.classList.remove('editing');
+    if (name === 'Password') {
+      document.getElementById('fieldPasswordConfirm').style.display = 'none';
+      inp.value = '';
+      document.getElementById('inpPasswordConfirm').value = '';
+    }
+  }
+
+  function saveField(name) {
+    const users = getUsers();
+    const idx = users.findIndex(u => u.username === session.username);
+    if (idx < 0) return;
+    const inp = document.getElementById('inp' + name);
+    const val = inp.value.trim();
+
+    if (name === 'Username') {
+      if (!val || val.length < 3) return alert('Username minimal 3 karakter!');
+      if (users.find((u, i) => u.username === val && i !== idx)) return alert('Username sudah dipakai!');
+      users[idx].username = val;
+      session.username = val;
+      localStorage.setItem('gl_session', JSON.stringify(session));
+      document.getElementById('dispUsername').textContent = val;
+    } else if (name === 'Email') {
+      if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return alert('Email tidak valid!');
+      if (users.find((u, i) => u.email === val && i !== idx)) return alert('Email sudah dipakai!');
+      users[idx].email = val;
+      session.email = val;
+      localStorage.setItem('gl_session', JSON.stringify(session));
+      document.getElementById('dispEmail').textContent = val;
+    } else if (name === 'Bio') {
+      users[idx].bio = val;
+      document.getElementById('dispBio').textContent = val || 'Belum ada bio.';
+    } else if (name === 'Password') {
+      const confirm = document.getElementById('inpPasswordConfirm').value;
+      if (!val || val.length < 6) return alert('Password minimal 6 karakter!');
+      if (val !== confirm) return alert('Password tidak cocok!');
+      users[idx].password = val;
+      inp.value = '';
+      document.getElementById('inpPasswordConfirm').value = '';
+      document.getElementById('fieldPasswordConfirm').style.display = 'none';
+    }
+
+    saveUsers(users);
+    cancelField(name);
+    loadProfile();
+    showNotif();
+    renderNav('profile');
+  }
+
+  function changeAvatar(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const data = e.target.result;
+      const users = getUsers();
+      const idx = users.findIndex(u => u.username === session.username);
+      if (idx >= 0) { users[idx].avatar = data; saveUsers(users); }
+      loadProfile();
+      renderNav('profile');
+      showNotif('Foto profil berhasil diperbarui!');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removeAvatar() {
+    if (!confirm('Hapus foto profil?')) return;
+    const users = getUsers();
+    const idx = users.findIndex(u => u.username === session.username);
+    if (idx >= 0) { users[idx].avatar = null; saveUsers(users); }
+    loadProfile();
+    renderNav('profile');
+    showNotif('Foto profil dihapus!');
+  }
+
+  function deleteAccount() {
+    if (!confirm('Yakin ingin menghapus akun? Tindakan ini tidak dapat dibatalkan!')) return;
+    if (!confirm('Konfirmasi sekali lagi: hapus akun secara permanen?')) return;
+    const users = getUsers().filter(u => u.username !== session.username);
+    saveUsers(users);
+    localStorage.removeItem('gl_session');
+    window.location.href = 'register.html';
+  }
+
+  loadProfile();
+</script>
+</body>
+</html>
