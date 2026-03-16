@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home – Gacor Legends</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="home.html" class="navbar-brand">
+    <span id="navLogoSlot"></span>
+    <span class="brand-name">GACOR<br>LEGENDS</span>
+  </a>
+  <div class="navbar-links">
+    <a href="home.html"       class="nav-link" data-page="home">Home</a>
+    <a href="penjelasan.html" class="nav-link" data-page="penjelasan">Penjelasan</a>
+    <a href="p2w.html"        class="nav-link" data-page="p2w">P2W</a>
+    <a href="team.html"       class="nav-link" data-page="team">Team</a>
+  </div>
+  <div class="navbar-right">
+    <a href="profile.html" class="nav-user">
+      <div class="nav-avatar" id="navAvatarSlot"></div>
+      <span class="nav-username" id="navUsernameSlot"></span>
+    </a>
+    <button class="btn-logout" onclick="doLogout()">Keluar</button>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" style="max-width:100%;padding:80px 24px 60px;">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🎮 Server Minecraft Indonesia #1</div>
+      <h1>SELAMAT DATANG DI<br><span>GACOR LEGENDS</span></h1>
+      <p class="hero-sub">Server Minecraft survival terbaik dengan komunitas aktif, event seru, dan gameplay yang adiktif. Bergabunglah sekarang!</p>
+
+      <div class="hero-ip">
+        <div>
+          <div class="hero-ip-label">IP Server</div>
+          <div class="hero-ip-val">bsc-1.aerocloud.id:19171</div>
+        </div>
+        <button class="hero-ip-copy" id="copyBtn" onclick="copyIP()">Salin</button>
+      </div>
+
+      <div class="hero-cta">
+        <a href="penjelasan.html" class="btn-primary">Mulai Bermain</a>
+        <a href="p2w.html" class="btn-secondary">Lihat P2W</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">40</span>
+          <span class="stat-label">Pemain Aktif</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">24/7</span>
+          <span class="stat-label">Online</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">99%</span>
+          <span class="stat-label">Uptime</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK FEATURES -->
+  <section style="max-width:1100px;margin:0 auto;padding:0 24px 80px;">
+    <div class="section-header">
+      <div class="section-tag">Kenapa Kami?</div>
+      <h2>Pengalaman Minecraft Terbaik</h2>
+      <p>Gacor Legends memberikan pengalaman bermain yang tak terlupakan</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">⚔️</span>
+        <h3>Survival Hardcore</h3>
+        <p>Rasakan tantangan survival sejati dengan sistem combat yang diperbaharui dan dunia yang luas untuk dijelajahi.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🏰</span>
+        <h3>Build Arena</h3>
+        <p>Bangun kerajaan impianmu, bertanding dengan pemain lain, dan tunjukkan kreativitas terbaikmu.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎁</span>
+        <h3>Event Mingguan</h3>
+        <p>Event dan reward eksklusif setiap minggu. Hadiah menarik menanti para pemenang tournament.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🤝</span>
+        <h3>Komunitas Aktif</h3>
+        <p>Discord aktif, admin responsif, dan komunitas pemain yang ramah dan supportif 24 jam.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-brand">GACOR LEGENDS</div>
+  <p>© 2024 Gacor Legends. Server Minecraft Indonesia Terbaik.</p>
+  <p style="margin-top:6px;">IP: bsc-1.aerocloud.id:19171</p>
+</footer>
+
+<script src="app.js"></script>
+<script>renderNav('home');</script>
+</body>
+</html>
