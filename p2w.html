@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2W Shop – Gacor Legends</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .price-tag {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 13px;
+      color: var(--gold);
+      text-shadow: var(--gold-glow);
+    }
+    .shop-note {
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 13px;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .rank-card {
+      background: var(--gray-900);
+      border: 1px solid var(--gray-700);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .rank-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(255,215,0,0.15);
+    }
+    .rank-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .rank-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+    .rank-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .rank-perks {
+      list-style: none;
+      text-align: left;
+      margin: 14px 0 20px;
+    }
+    .rank-perks li {
+      font-size: 13px;
+      color: var(--gray-400);
+      padding: 5px 0;
+      border-bottom: 1px solid var(--gray-800);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .rank-perks li::before { content: '✓'; color: var(--accent); font-weight: 700; }
+    .btn-buy {
+      width: 100%;
+      padding: 12px;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 15px; font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-buy:hover { box-shadow: var(--gold-glow); transform: scale(1.02); }
+    .badge-popular {
+      position: absolute; top: 14px; right: 14px;
+      background: var(--accent); color: var(--black);
+      font-size: 9px; font-weight: 800;
+      padding: 4px 10px; border-radius: 100px;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .cosmetic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .cosmetic-card {
+      background: var(--gray-900);
+      border: 1px solid var(--gray-800);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .cosmetic-card:hover { border-color: rgba(255,215,0,0.4); transform: scale(1.04); }
+    .cosmetic-icon { font-size: 36px; margin-bottom: 10px; display: block; }
+    .cosmetic-name { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+    .cosmetic-price { font-family: 'Press Start 2P', monospace; font-size: 11px; color: var(--gold); }
+
+    /* ===== IMPROVED FOOTER ===== */
+    .site-footer {
+      background: var(--gray-900);
+      border-top: 1px solid rgba(255, 34, 34, 0.15);
+      position: relative;
+      margin-top: 40px;
+    }
+    .footer-glow-line {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255,34,34,0.0) 10%,
+        var(--accent) 40%,
+        rgba(255,215,0,0.8) 50%,
+        var(--accent) 60%,
+        rgba(255,34,34,0.0) 90%,
+        transparent 100%
+      );
+      box-shadow: 0 0 18px rgba(255,34,34,0.35);
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 24px 40px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 40px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .footer-brand-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: var(--accent);
+      line-height: 1.6;
+      text-shadow: var(--accent-glow);
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--gray-400);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .footer-ip-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gray-800);
+      border: 1px solid rgba(255,34,34,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      flex-wrap: wrap;
+    }
+    .footer-ip-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+    .footer-ip-val {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      color: var(--accent);
+      text-shadow: var(--accent-glow);
+    }
+    .footer-copy-btn {
+      background: var(--accent-dim);
+      border: 1px solid rgba(255,34,34,0.3);
+      border-radius: 5px;
+      padding: 4px 10px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-family: 'Exo 2', sans-serif;
+      transition: all 0.2s;
+    }
+    .footer-copy-btn:hover { background: var(--accent); color: var(--white); }
+    .footer-col-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,34,34,0.15);
+    }
+    .footer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-nav-list li a {
+      font-size: 14px;
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-nav-list li a:hover { color: var(--white); }
+    .footer-social-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-social-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gray-800);
+      border: 1px solid var(--gray-700);
+      border-radius: 8px;
+      padding: 8px 14px;
+      text-decoration: none;
+      color: var(--gray-300);
+      font-size: 13px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+    .footer-social-btn:hover {
+      border-color: rgba(255,34,34,0.4);
+      color: var(--white);
+      background: rgba(255,34,34,0.06);
+      transform: translateX(3px);
+    }
+    .social-icon { font-size: 16px; }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      border-top: 1px solid var(--gray-800);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+    .footer-bottom-sep { color: var(--gray-700); }
+
+    @media (max-width: 900px) {
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-brand-col { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+      .footer-inner { grid-template-columns: 1fr; padding: 36px 20px 28px; }
+      .footer-bottom { flex-direction: column; gap: 4px; text-align: center; }
+      .footer-bottom-sep { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="home.html" class="navbar-brand">
+    <span id="navLogoSlot"></span>
+    <span class="brand-name">GACOR<br>LEGENDS</span>
+  </a>
+  <div class="navbar-links">
+    <a href="home.html" class="nav-link" data-page="home">Home</a>
+    <a href="penjelasan.html" class="nav-link" data-page="penjelasan">Penjelasan</a>
+    <a href="p2w.html" class="nav-link" data-page="p2w">P2W</a>
+    <a href="team.html" class="nav-link" data-page="team">Team</a>
+  </div>
+  <div class="navbar-right">
+    <a href="profile.html" class="nav-user">
+      <div class="nav-avatar" id="navAvatarSlot"></div>
+      <span class="nav-username" id="navUsernameSlot"></span>
+    </a>
+    <button class="btn-logout" onclick="doLogout()">Keluar</button>
+  </div>
+</nav>
+
+<main>
+  <div style="background:var(--gray-900);border-bottom:1px solid var(--gray-800);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.06) 0%, transparent 60%);"></div>
+    <div style="position:relative;z-index:1;">
+      <div class="section-tag" style="background:rgba(255,215,0,0.1);border-color:rgba(255,215,0,0.3);color:var(--gold);">💰 Shop</div>
+      <h1 style="font-family:'Rajdhani',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--white);margin-top:12px;">Gacor Legends <span style="color:var(--gold);text-shadow:var(--gold-glow);">Store</span></h1>
+      <p style="color:var(--gray-400);font-size:15px;margin-top:12px;max-width:540px;margin-left:auto;margin-right:auto;">Dukung server dan tingkatkan pengalamanmu dengan rank, kit, dan cosmetic eksklusif.</p>
+    </div>
+  </div>
+
+  <!-- RANK SECTION -->
+  <section>
+    <div class="section-header">
+      <div class="section-tag" style="background:rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.25);color:var(--gold);">👑 Rank</div>
+      <h2>Pilih Rank Kamu</h2>
+      <p>Dapatkan keuntungan eksklusif dan tampil beda dengan rank premium</p>
+    </div>
+    <div class="shop-note">⚡ Beli rank = kontribusi nyata untuk kelangsungan server. Terima kasih, Legenda!</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;">
+
+      <div class="rank-card">
+        <span class="rank-icon">🤵</span>
+        <div class="rank-name">Tuan</div>
+        <ul class="rank-perks">
+          <li>Prefix [Tuan] berwarna emas</li>
+          <li>3 set home tambahan</li>
+          <li>Akses /fly di spawn</li>
+          <li>Kit Tuan (cooldown 3 hari)</li>
+          <li>10% diskon di market</li>
+        </ul>
+        <div class="price-tag" style="margin-bottom:16px;">Rp 50.000</div>
+        <button class="btn-buy" onclick="buyItem('Rank Tuan', '50k')">BELI SEKARANG</button>
+      </div>
+
+      <div class="rank-card" style="border-color:var(--gold);">
+        <div class="badge-popular">TERLARIS</div>
+        <span class="rank-icon">👦</span>
+        <div class="rank-name">Tuan Muda</div>
+        <ul class="rank-perks">
+          <li>Prefix [Tuan Muda] pink</li>
+          <li>2 set home tambahan</li>
+          <li>Kit Muda (cooldown 2 hari)</li>
+          <li>Akses /nick ganti nama</li>
+          <li>Partikel khusus saat join</li>
+        </ul>
+        <div class="price-tag" style="margin-bottom:16px;">Rp 30.000</div>
+        <button class="btn-buy" onclick="buyItem('Rank Tuan Muda', '30k')">BELI SEKARANG</button>
+      </div>
+
+      <div class="rank-card">
+        <span class="rank-icon">🧙</span>
+        <div class="rank-name">Sepuh</div>
+        <ul class="rank-perks">
+          <li>Prefix [Sepuh] merah menyala</li>
+          <li>5 set home tambahan</li>
+          <li>Akses /fly di seluruh dunia</li>
+          <li>Kit Sepuh (cooldown 1 hari)</li>
+          <li>20% diskon di market</li>
+          <li>Warna chat custom</li>
+        </ul>
+        <div class="price-tag" style="margin-bottom:16px;">Rp 60.000</div>
+        <button class="btn-buy" onclick="buyItem('Rank Sepuh', '60k')">BELI SEKARANG</button>
+      </div>
+
+      <div class="rank-card" style="border-color:rgba(138,43,226,0.5);">
+        <div style="position:absolute;top:14px;right:14px;background:linear-gradient(135deg,#8a2be2,#da70d6);color:#fff;font-size:9px;font-weight:800;padding:4px 10px;border-radius:100px;letter-spacing:1px;">EKSKLUSIF</div>
+        <span class="rank-icon">🎥</span>
+        <div class="rank-name" style="color:#da70d6;">Media</div>
+        <ul class="rank-perks">
+          <li>Prefix [Media] berwarna ungu</li>
+          <li>Akses /fly di seluruh dunia</li>
+          <li>Kit Media spesial eksklusif</li>
+          <li>Tag khusus Content Creator</li>
+          <li>Akses area VIP server</li>
+          <li>Support promosi dari admin</li>
+        </ul>
+        <div style="background:rgba(138,43,226,0.1);border:1px solid rgba(138,43,226,0.3);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#da70d6;line-height:1.6;">
+          🎬 <strong>GRATIS!</strong> Cukup dengan live streaming atau membuat video konten tentang server kami
+        </div>
+        <button class="btn-buy" style="background:linear-gradient(135deg,#8a2be2,#da70d6);color:#fff;" onclick="daftarMedia()">🎥 DAFTAR MEDIA</button>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- KIT SECTION -->
+  <section>
+    <div class="section-header">
+      <div class="section-tag" style="background:rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.25);color:var(--gold);">🎒 Kit</div>
+      <h2>Kit Premium</h2>
+      <p>Starter pack terbaik untuk mendominasi survival dari awal</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      <div class="rank-card">
+        <span class="rank-icon">💎</span>
+        <div class="rank-name">Kit Supreme</div>
+        <ul class="rank-perks">
+          <li>Full armor diamond enchant tinggi</li>
+          <li>Sword Sharp V, Fire Aspect II</li>
+          <li>Tools Fortune III, Efficiency V</li>
+          <li>32x Golden Apple</li>
+          <li>Elytra + Firework x64</li>
+          <li>Cooldown: 7 hari</li>
+        </ul>
+        <div class="price-tag" style="margin-bottom:16px;">Rp 25.000</div>
+        <button class="btn-buy" onclick="buyItem('Kit Supreme', '25k')">BELI KIT</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- COSMETIC SECTION -->
+  <section>
+    <div class="section-header">
+      <div class="section-tag" style="background:rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.25);color:var(--gold);">✨ Cosmetic</div>
+      <h2>Cosmetic & Aksesori</h2>
+      <p>Tampil beda dengan cosmetic eksklusif Gacor Legends</p>
+    </div>
+    <div class="cosmetic-grid">
+      <div class="cosmetic-card" onclick="buyItem('Trail Api','25k')">
+        <span class="cosmetic-icon">🔥</span>
+        <div class="cosmetic-name">cosme brutal legends</div>
+        <div class="cosmetic-price">Rp 25.000-Rp 35.000</div>
+      </div>
+    </div>
+  </section><!-- ✅ section cosmetic ditutup dengan benar di sini -->
+
+</main><!-- ✅ main ditutup setelah semua section -->
+
+<!-- BUY MODAL -->
+<div id="buyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:var(--gray-900);border:1px solid var(--gold);border-radius:16px;padding:36px;max-width:380px;width:90%;text-align:center;">
+    <span style="font-size:48px;" id="modalIcon">💳</span>
+    <h3 style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--white);margin:12px 0 6px;" id="modalTitle"></h3>
+    <p style="font-family:'Press Start 2P',monospace;font-size:14px;color:var(--gold);margin-bottom:16px;" id="modalPrice"></p>
+    <p style="font-size:13px;color:var(--gray-400);margin-bottom:24px;">Klik tombol di bawah untuk menghubungi admin via WhatsApp dan konfirmasi pembelian.</p>
+    <a id="waLink" href="#" target="_blank" style="display:block;background:var(--gold);color:var(--black);border-radius:8px;padding:12px;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;text-decoration:none;margin-bottom:10px;font-size:15px;">📲 HUBUNGI ADMIN WHATSAPP</a>
+    <button onclick="document.getElementById('buyModal').style.display='none'" style="background:var(--gray-700);color:var(--gray-400);border:none;border-radius:8px;padding:10px 24px;cursor:pointer;font-family:'Exo 2',sans-serif;">Tutup</button>
+  </div>
+</div>
+
+<!-- IMPROVED FOOTER -->
+<footer class="site-footer">
+  <div class="footer-glow-line"></div>
+  <div class="footer-inner">
+
+    <!-- Brand col -->
+    <div class="footer-col footer-brand-col">
+      <div class="footer-logo">
+        <span id="footerLogoSlot"></span>
+        <span class="footer-brand-name">GACOR<br>LEGENDS</span>
+      </div>
+      <p class="footer-tagline">Server Minecraft Survival Indonesia<br>terbaik, paling gacor, paling seru.</p>
+      <div class="footer-ip-box">
+        <span class="footer-ip-label">SERVER IP</span>
+        <span class="footer-ip-val">play.gacorlegends.net</span>
+        <button class="footer-copy-btn" onclick="copyFooterIP()">COPY</button>
+      </div>
+    </div>
+
+    <!-- Nav col -->
+    <div class="footer-col">
+      <h4 class="footer-col-title">Navigasi</h4>
+      <ul class="footer-nav-list">
+        <li><a href="home.html">🏠 Home</a></li>
+        <li><a href="penjelasan.html">📖 Penjelasan</a></li>
+        <li><a href="p2w.html">💰 P2W Shop</a></li>
+        <li><a href="team.html">👥 Tim Admin</a></li>
+        <li><a href="profile.html">👤 Profil Saya</a></li>
+      </ul>
+    </div>
+
+    <!-- Shop col -->
+    <div class="footer-col">
+      <h4 class="footer-col-title">Shop Cepat</h4>
+      <ul class="footer-nav-list">
+        <li><a href="#" onclick="buyItem('Rank Tuan','50k');return false;">🤵 Rank Tuan</a></li>
+        <li><a href="#" onclick="buyItem('Rank Tuan Muda','30k');return false;">👦 Rank Tuan Muda</a></li>
+        <li><a href="#" onclick="buyItem('Rank Sepuh','60k');return false;">🧙 Rank Sepuh</a></li>
+        <li><a href="#" onclick="buyItem('Kit Supreme','25k');return false;">💎 Kit Supreme</a></li>
+        <li><a href="#" onclick="daftarMedia();return false;">🎥 Daftar Media</a></li>
+      </ul>
+    </div>
+
+    <!-- Social col -->
+    <div class="footer-col">
+      <h4 class="footer-col-title">Ikuti Kami</h4>
+      <div class="footer-social-list">
+        <a class="footer-social-btn" href="https://www.tiktok.com/@gacor.legend?is_from_webapp=1&sender_device=pc" target="tiktok.com/@gacor.legend"><span class="social-icon">🎵</span><span>TikTok</span></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2024 <strong>Gacor Legends</strong>. All rights reserved.</span>
+    <span class="footer-bottom-sep">·</span>
+    <span>Not affiliated with Mojang / Microsoft</span>
+    <span class="footer-bottom-sep">·</span>
+    <span style="color:var(--accent);">Minecraft Indonesia 🇮🇩</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  renderNav('p2w');
+
+  function copyFooterIP() {
+    navigator.clipboard.writeText('play.gacorlegends.net').then(() => {
+      const btn = document.querySelector('.footer-copy-btn');
+      const orig = btn.textContent;
+      btn.textContent = 'COPIED!';
+      btn.style.background = 'var(--accent)';
+      btn.style.color = 'var(--white)';
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 2000);
+    });
+  }
+
+  function daftarMedia() {
+    const pesan = `Halo Admin Gacor Legends! 👋\n\nSaya ingin mendaftar sebagai *Rank Media* 🎥\n\nSaya adalah content creator dan bersedia melakukan:\n☑️ Live streaming di server\n☑️ Membuat video konten tentang server\n\nMohon info syarat dan ketentuan pendaftarannya. Terima kasih!`;
+    const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
+    window.open(waUrl, '_blank');
+  }
+
+  function buyItem(name, price) {
+    document.getElementById('modalTitle').textContent = name;
+    document.getElementById('modalPrice').textContent = 'Rp ' + price;
+    const pesan = `Halo Admin Gacor Legends! 👋\n\nSaya ingin membeli:\n*${name}* - Rp ${price}\n\nMohon konfirmasi cara pembayarannya. Terima kasih!`;
+    const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
+    document.getElementById('waLink').href = waUrl;
+    const modal = document.getElementById('buyModal');
+    modal.style.display = 'flex';
+  }
+
+  document.getElementById('buyModal').addEventListener('click', function(e){
+    if(e.target===this) this.style.display='none';
+  });
+</script>
+</body>
+</html>
