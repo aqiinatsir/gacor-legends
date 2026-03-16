@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team – Gacor Legends</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="home.html" class="navbar-brand">
+    <span id="navLogoSlot"></span>
+    <span class="brand-name">GACOR<br>LEGENDS</span>
+  </a>
+  <div class="navbar-links">
+    <a href="home.html" class="nav-link" data-page="home">Home</a>
+    <a href="penjelasan.html" class="nav-link" data-page="penjelasan">Penjelasan</a>
+    <a href="p2w.html" class="nav-link" data-page="p2w">P2W</a>
+    <a href="team.html" class="nav-link" data-page="team">Team</a>
+  </div>
+  <div class="navbar-right">
+    <a href="profile.html" class="nav-user">
+      <div class="nav-avatar" id="navAvatarSlot"></div>
+      <span class="nav-username" id="navUsernameSlot"></span>
+    </a>
+    <button class="btn-logout" onclick="doLogout()">Keluar</button>
+  </div>
+</nav>
+
+<main>
+  <div style="background:var(--gray-900);border-bottom:1px solid var(--gray-800);padding:60px 24px 50px;text-align:center;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%, rgba(0,255,136,0.06) 0%, transparent 60%);"></div>
+    <div style="position:relative;z-index:1;">
+      <div class="section-tag">👥 Tim Kami</div>
+      <h1 style="font-family:'Rajdhani',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--white);margin-top:12px;">Orang-orang di Balik <span style="color:var(--accent);">Gacor Legends</span></h1>
+      <p style="color:var(--gray-400);font-size:15px;margin-top:12px;max-width:540px;margin-left:auto;margin-right:auto;">Tim berdedikasi yang bekerja keras setiap hari agar servermu selalu aman dan menyenangkan.</p>
+    </div>
+  </div>
+
+  <!-- OWNER -->
+  <section>
+    <div class="section-header">
+      <div class="section-tag">👑 Pimpinan</div>
+      <h2>Owner & Co-Owner</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:700px;margin:0 auto;">
+      <div style="background:var(--gray-900);border:2px solid var(--accent);border-radius:16px;padding:32px 24px;text-align:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent);"></div>
+        <div style="width:80px;height:80px;border-radius:50%;background:var(--gray-800);border:3px solid var(--accent);box-shadow:var(--accent-glow);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 16px;">⚔️</div>
+        <div class="team-name" style="font-size:22px;">AnzouTz</div>
+        <div class="team-role">Owner</div>
+        <div class="team-desc">Pendiri dan pemimpin tertinggi Gacor Legends. Bertanggung jawab atas semua keputusan besar server.</div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:16px;">
+          <span style="background:var(--accent-dim);border:1px solid rgba(0,255,136,0.2);border-radius:100px;padding:3px 10px;font-size:11px;color:var(--accent);">Founder</span>
+          <span style="background:var(--accent-dim);border:1px solid rgba(0,255,136,0.2);border-radius:100px;padding:3px 10px;font-size:11px;color:var(--accent);">Developer</span>
+        </div>
+      </div>
+
+      <div style="background:var(--gray-900);border:1px solid var(--gray-700);border-radius:16px;padding:32px 24px;text-align:center;">
+        <div style="width:80px;height:80px;border-radius:50%;background:var(--gray-800);border:3px solid var(--gray-600);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 16px;">🛡️</div>
+        <div class="team-name" style="font-size:22px;">Ris</div>
+        <div class="team-role" style="color:var(--gray-400);">Co-Owner</div>
+        <div class="team-desc">Membantu owner dalam pengelolaan server, event planning, dan manajemen tim staff.</div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:16px;">
+          <span style="background:var(--gray-800);border:1px solid var(--gray-700);border-radius:100px;padding:3px 10px;font-size:11px;color:var(--gray-400);">Co-Owner</span>
+          <span style="background:var(--gray-800);border:1px solid var(--gray-700);border-radius:100px;padding:3px 10px;font-size:11px;color:var(--gray-400);">Event</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ADMIN -->
+  <section>
+    <div class="section-header">
+      <div class="section-tag">🔧 Admin</div>
+      <h2>Tim Administrator</h2>
+      <p>Admin adalah tulang punggung server yang menjaga ketertiban dan keamanan</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">🔱</div>
+        <div class="team-name">Madun</div>
+        <div class="team-role">Admin Build</div>
+        <div class="team-desc">Mengawasi semua staff dan memastikan rules server dijalankan dengan baik.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">⚙️</div>
+        <div class="team-name">Luthh</div>
+        <div class="team-role">Admin Magang</div>
+        <div class="team-desc">Bertugas mengembangkan plugin custom dan fitur-fitur baru yang menarik.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">🎯</div>
+        <div class="team-name">Snow</div>
+        <div class="team-role">Admin Rp</div>
+        <div class="team-desc">Mengatur dan menyeimbangkan sistem PvP agar fair untuk semua pemain.</div>
+        </div>
+      <div class="team-card">
+        <div class="team-avatar">🎯</div>
+        <div class="team-name">Bima</div>
+        <div class="team-role">Admin Replay</div>
+        <div class="team-desc">Mengatur dan membuat sebuat Video atau film pendek</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+<footer>
+  <div class="footer-brand">GACOR LEGENDS</div>
+  <p>© 2024 Gacor Legends. Server Minecraft Indonesia Terbaik.</p>
+  <p style="margin-top:6px;">IP: play.gacorlegends.net</p>
+</footer>
+
+<script src="app.js"></script>
+<script>renderNav('team');</script>
+</body>
+</html>
